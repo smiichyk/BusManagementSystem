@@ -120,8 +120,50 @@ public class Bus {
     }
 
     // Getters
-
+    public int getBusNumber() {
+        return busNumber;
+    }
+    public String getBusName() {
+        return busName;
+    }
+    public String getRouteName() {
+        return routeName;
+    }
+    public String getDepartureTime() {
+        return departureTime;
+    }
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+    public int getCapacity() {
+        return capacity;
+    }
+    public String[] getStops() {
+        return stops;
+    }
 
     // Setters
+    public void setBusNumber(int busNumber) {
+        this.busNumber = busNumber;
+    }
+    public void setBusName(String busName) {
+        this.busName = busName;
+    }
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
+    }
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+    public void setStops(String[] stops) {
+        this.stops = stops;
+    }
+
 
 }

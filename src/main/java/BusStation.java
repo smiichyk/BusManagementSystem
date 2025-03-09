@@ -38,8 +38,24 @@ public class BusStation {
     }
 
     // Getters
-
+    public String getStationName() {
+        return stationName;
+    }
+    public String getLocation() {
+        return location;
+    }
+    public Bus[] getBuses() {
+        return buses;
+    }
 
     // Setters
-
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public void setBuses(Bus[] buses) {
+        this.buses = buses;
+    }
 }
