@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class BusStation {
 
     // Fields
@@ -57,5 +59,20 @@ public class BusStation {
     }
     public void setBuses(Bus[] buses) {
         this.buses = buses;
+    }
+
+    // Methods
+    public void addBus(Bus bus) {
+
+    }
+    public void removeBus(int busNumber) {
+
+    }
+    public void findBus(int busNumber) {
+
+    }
+    public String toString() {
+        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+
+                "; buses: "+ Arrays.toString(this.buses) +"}";
     }
 }

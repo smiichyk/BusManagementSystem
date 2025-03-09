@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Bus {
 
     // Fields
@@ -165,5 +167,19 @@ public class Bus {
         this.stops = stops;
     }
 
+    // Methods
+    public void addStop(String stopName) {
 
+    }
+    public void removeStop(String stopName) {
+
+    }
+    public void displayRoute() {
+
+    }
+    public String toString() {
+        return "Bus: {busNumber: "+this.busNumber+"; busName: "+this.busName+"; routeName: "+this.routeName+
+                "; departureTime: "+this.departureTime+"; arrivalTime: "+this.arrivalTime+
+                "; capacity: "+this.capacity+"; stops: "+Arrays.toString(this.stops) +"}";
+    }
 }
