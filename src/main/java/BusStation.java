@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BusStation {
@@ -5,20 +6,20 @@ public class BusStation {
     // Fields
     private String stationName;
     private String location;
-    private Bus[] buses;
+    private ArrayList<Bus> buses;
 
     // Constructors
     public BusStation() {
         this.stationName="";
         this.location="";
-        this.buses=new Bus[0];
+        this.buses=new ArrayList<>();
     }
-    public BusStation(String stationName, String location, Bus[] buses) {
+    public BusStation(String stationName, String location, ArrayList<Bus> buses) {
         this.stationName=stationName;
         this.location=location;
         this.buses=buses;
     }
-    public BusStation(String stationName, Bus[] buses) {
+    public BusStation(String stationName, ArrayList<Bus> buses) {
         this.stationName=stationName;
         this.location="";
         this.buses=buses;
@@ -26,14 +27,14 @@ public class BusStation {
     public BusStation(String stationName, String location) {
         this.stationName=stationName;
         this.location=location;
-        this.buses=new Bus[0];
+        this.buses=new ArrayList<>();
     }
     public BusStation(String stationName) {
         this.stationName=stationName;
         this.location="";
-        this.buses=new Bus[0];
+        this.buses=new ArrayList<>();
     }
-    public BusStation(Bus[] buses) {
+    public BusStation(ArrayList<Bus> buses) {
         this.stationName="";
         this.location="";
         this.buses=buses;
@@ -46,7 +47,7 @@ public class BusStation {
     public String getLocation() {
         return location;
     }
-    public Bus[] getBuses() {
+    public ArrayList<Bus> getBuses() {
         return buses;
     }
 
@@ -57,7 +58,7 @@ public class BusStation {
     public void setLocation(String location) {
         this.location = location;
     }
-    public void setBuses(Bus[] buses) {
+    public void setBuses(ArrayList<Bus> buses) {
         this.buses = buses;
     }
 
@@ -65,14 +66,26 @@ public class BusStation {
     public void addBus(Bus bus) {
 
     }
-    public void removeBus(int busNumber) {
+    public void removeBus(int bus_number) {
 
     }
-    public void findBus(int busNumber) {
+    public void findBusByBusNumber(int bus_number) {
 
     }
+    public void findBusByBusName(String bus_name) {
+
+    }
+    public void findBusesByRoute(String route_name) {
+
+    }
+    public void getBusDetails(int bus_number) {
+
+    }
+    public void getAllBuses() {
+
+    }
+
     public String toString() {
-        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+
-                "; buses: "+ Arrays.toString(this.buses) +"}";
+        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+"; buses: "+this.buses+"}";
     }
 }
