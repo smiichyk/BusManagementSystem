@@ -64,7 +64,7 @@ public class BusStation {
 
     // Methods
     public void addBus(Bus bus) {
-
+        buses.add(bus);
     }
     public void removeBus(int bus_number) {
 
@@ -78,14 +78,23 @@ public class BusStation {
     public void findBusesByRoute(String route_name) {
 
     }
-    public void getBusDetails(int bus_number) {
-
+    public String getBusDetails(int bus_number) {
+        for (Bus bus : buses) {
+            if (bus.getBusNumber() == bus_number) {
+                return bus.toString();
+            }
+        }
+        return "Bus not found";
     }
-    public void getAllBuses() {
-
+    public ArrayList<String> getAllBuses() {
+        ArrayList<String> buses = new ArrayList<>();
+        for (Bus bus : this.buses) {
+            buses.add(bus.getBusName());
+        }
+        return buses;
     }
 
     public String toString() {
-        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+"; buses: "+this.buses+"}";
+        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+"; buses: "+this.buses.size()+"}";
     }
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bus {
 
@@ -189,45 +188,79 @@ public class Bus {
 
     // Methods
     public void addStop(String stop_name, String time) {
-
+        stops.add(stop_name);
+        times.add(time);
     }
-    public void addMultipleStops( String[] stops, String[] time) {
-
+    public void addStop(int index, String stop_name, String time) {
+        stops.add(index, stop_name);
+        times.add(index, time);
+    }
+    public void addMultipleStops(ArrayList<String> stops, ArrayList<String> times) {
+        this.stops.addAll(stops);
+        this.times.addAll(times);
     }
     public void removeStop(String stop_name) {
-
+        for (String stop : stops) {
+            if (stop.equals(stop_name)) {
+                stops.remove(stop);
+                times.remove(stop);
+            }
+        }
     }
-    public void removeStopAtIndex(int index) {
-
+    public void removeStop(int index) {
+        stops.remove(index);
+        times.remove(index);
     }
     public void clearStops() {
-
+        stops.clear();
+        times.clear();
     }
-    public void getStopCount() {
-
+    public int getStopCount() {
+        return stops.size();
     }
     public void updateStop(int index, String new_stop, String new_time) {
-
+        stops.set(index, new_stop);
+        times.set(index, new_time);
     }
-    public void hasStop(String stop_name) {
-
+    public boolean hasStop(String stop_name) {
+        for (String stop : stops) {
+            if (stop.equals(stop_name)) {
+                return true;
+            }
+        }
+        return false;
     }
     public void displayRoute() {
-
+        for (int i=0; i<stops.size(); i++) {
+            System.out.printf("%-15s  %-15s %n", "Stop", "Time");
+            System.out.printf("%-15s  %-15s %n", stops.get(i), times.get(i));
+        }
     }
-    public void getRouteDuration() {
-
+    public String getRouteDuration() {
+        int departureTimeInMinutes = (Integer.parseInt(departureTime.split(":")[0])*60)
+                + Integer.parseInt(departureTime.split(":")[1]);
+        int arrivalTimeInMinutes = (Integer.parseInt(arrivalTime.split(":")[0])*60)
+                + Integer.parseInt(arrivalTime.split(":")[1]);
+        int differenceInMinutes = arrivalTimeInMinutes - departureTimeInMinutes;
+        int difference = 0;
+        while (differenceInMinutes>=60) {
+            differenceInMinutes -=60;
+            difference++;
+        }
+        return difference+" hour(s) and "+differenceInMinutes+" minute(s)";
     }
     public void increaseCapacity(int seats) {
-
+        seatCapacity++;
     }
     public void decreaseCapacity(int seats) {
-
+        if (seatCapacity>0) {
+            seatCapacity--;
+        }
     }
     public String toString() {
         return "Bus: {busNumber: "+this.busNumber+"; busName: "+this.busName+"; routeName: "+this.routeName+
                 "; departureTime: "+this.departureTime+"; arrivalTime: "+this.arrivalTime+
-                "; seatCapacity: "+this.seatCapacity+"; stops: "+this.stops+
-                "; times: "+this.times+ "}";
+                "; seatCapacity: "+this.seatCapacity+"; stops: "+this.stops.size()+
+                "; times: "+this.times.size()+ "}";
     }
 }
