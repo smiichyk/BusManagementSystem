@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BusStation {
 
@@ -86,14 +85,12 @@ public class BusStation {
         }
         return "Bus not found";
     }
-    public ArrayList<String> getAllBuses() {
-        ArrayList<String> buses = new ArrayList<>();
+    public void displayAllBuses() {
+        System.out.println("Buses currently in " + stationName + " Bus Station:");
         for (Bus bus : this.buses) {
-            buses.add(bus.getBusName());
+            System.out.println(bus.getBusNumber()+": "+bus.getBusName());
         }
-        return buses;
     }
-
     public String toString() {
         return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+"; buses: "+this.buses.size()+"}";
     }
