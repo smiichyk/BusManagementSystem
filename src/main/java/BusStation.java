@@ -86,12 +86,27 @@ public class BusStation {
         return "Bus not found";
     }
     public void displayAllBuses() {
-        System.out.println("Buses currently in " + stationName + " Bus Station:");
+        System.out.println("BUSES CURRENTLY IN " + stationName+":"+"\n" +
+                "Bus Number\tBus Name");
         for (Bus bus : this.buses) {
-            System.out.println(bus.getBusNumber()+": "+bus.getBusName());
+            System.out.println(bus.getBusNumber()+"\t\t"+bus.getBusName());
         }
     }
+    public void displayAllBuses(String route) {
+        for (Bus bus : this.buses) {
+            if (bus.getRouteName().equals(route)) {
+                System.out.println(bus.getBusNumber() + ": " + bus.getBusName());
+            }
+        }
+    }
+    public void loadBusesFromTextFile(String fileName) {
+
+    }
+    public void replaceBusListFromTextFile(String fileName) {
+
+    }
+
     public String toString() {
-        return "BusStation: {stationName: "+this.stationName+"; location: "+this.location+"; buses: "+this.buses.size()+"}";
+        return "BUS STATION INFORMATION:\nStation Name: "+this.stationName+"\nLocation: "+this.location+"\nBuses: "+this.buses.size();
     }
 }

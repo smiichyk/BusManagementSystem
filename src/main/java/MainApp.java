@@ -11,7 +11,54 @@ public class MainApp {
         mainMenu();
     }
 
+    public static BusStation getDundalkBusStation() {
+        BusStation dundalkBusStation = new BusStation("Dundalk Bus Station", "Dundalk");
+        dundalkBusStation.addBus(getRoute100());
+        dundalkBusStation.addBus(getRoute100X());
+        return dundalkBusStation;
+    }
+
+    public static Bus getRoute100() {
+        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
+                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
+                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)", "Haggardstown (Sextons)",
+                "Greengates Cross (Southbound)", "Castlebellingham (The Village Store)",
+                "Kilsaran (Opp St Olivers Park)", "Kilsaran (Opp St Marys Villas)",
+                "Mullins Cross (Southbound)", "Dunleer (The Dunleer Inn)", "Dunleer (Wogans Hardware)",
+                "Mullary (Southbound)", "Tinure (Southbound)", "Monasterboice (Monasterboice Inn)",
+                "Killeneer (Cockle Rd Cross Sbound)", "Killeneer (Killeneer Cottages)",
+                "Drogheda Hospital (NorthGate East)", "Drogheda (Bus Station)"
+        ));
+        ArrayList<String> times = new ArrayList<>(Arrays.asList(
+                "06:15", "06:17", "06:19", "06:20", "06:23", "06:24", "06:30", "06:31", "06:32", "06:35",
+                "06:39", "06:40", "06:43", "06:45", "06:49", "06:49", "06:50", "06:56", "07:06"
+        ));
+        return new Bus(314682, "100", "Dundalk - Drogheda", "06:15",
+                "07:06", 55, stops, times);
+    }
+
+    public static Bus getRoute100X() {
+        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
+                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
+                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)",
+                "Castlebellingham (The Village Store)", "Dunleer (The Dunleer Inn)",
+                "Drogheda (North Road - Opp Circle K)", "Drogheda (Donore Rd FBD)", "Drogheda (Bus Station)",
+                "Drogheda (Donore Rd The Thatch Pub)", "Dublin Airport (Terminal Two)", "Dublin Airport - Maldron Hotel",
+                "Dublin (East Wall Rd Opp 3Arena)", "Dublin (Opp Convention Centre)",
+                "Custom House Qy (Op Hilton Garden Inn)", "South Townsend St",
+                "Westland Row Church", "Merrion Square West (Jct Clare St)", "Merrion Square South"
+        ));
+
+        ArrayList<String> times = new ArrayList<>(Arrays.asList(
+                "06:30", "06:33", "06:35", "06:37", "", "", "", "07:02", "07:10", "07:14",
+                "07:46", "07:48", "08:02", "08:04", "08:06", "08:09", "08:12", "08:16", "08:20"
+        ));
+        return new Bus(314654, "100X", "Dundalk - Dublin", "06:30",
+                "08:20", 55, stops, times);
+    }
+
     public static void mainMenu() {
+        String[] choices = {"1", "2", "0"};
         boolean exit = false;
 
         // Loop runs until the user chooses to exit
@@ -31,11 +78,14 @@ public class MainApp {
             String choice = scanner.nextLine();
 
             // Validate user input to ensure it is one of the allowed choices (0, 1, or 2)
-            while (!choice.equals("1") && !choice.equals("2") && !choice.equals("0")) {
+            while (!isValidChoice(choice, choices)) {
                 System.out.println("""
                     
                     **************************************************************************
+                    
                     Invalid choice. Please enter a number from 0 to 2.
+                    
+                    **************************************************************************
                     
                     1. Bus Station Management
                     2. Bus Management
@@ -62,59 +112,80 @@ public class MainApp {
 
     public static void busStationManagementMenu() {
 
+        String[] choices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
         // Display the bus station management menu options
         System.out.println("""
                 
                 **************************************************************************
                 
                 1. View bus station information
-                2. Add a new bus
-                3. Remove a bus
-                4. Search for a bus
-                5. View all buses
+                2. Edit Bus Station Info
+                3. Create a new Bus Station
+                4. Add a new bus
+                5. Remove a bus
+                6. Search for a bus
+                7. View all buses
+                8. View buses by route
+                9. Load buses from text file
+                10. Replace bus list from text file
                 0. Main Menu""");
 
         // Read user input
         System.out.print("\nYour choice: ");
         String choice = scanner.nextLine();
 
-        // Validate user input to ensure it is one of the allowed choices (0, 1, 2, 3, 4 or 5)
-        while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4") &&
-                !choice.equals("5") && !choice.equals("0")) {
+        // Validate user input to ensure it is one of the allowed choices (1, 2, 3, 4, 5, 6, 7, 8, 9, or 10)
+        while (!isValidChoice(choice, choices)) {
             System.out.println("""
-                
-                **************************************************************************
-                
-                Invalid choice. Please enter a number from 0 to 5.
-                
-                1. View bus station information
-                2. Add a new bus
-                3. Remove a bus
-                4. Search for a bus
-                5. View all buses
-                0. Main Menu""");
+                                    
+                    **************************************************************************
+                                    
+                    Invalid choice. Please enter a number from 0 to 5.
+                    
+                    **************************************************************************
+                                    
+                    1. View bus station information
+                    2. Edit Bus Station Info
+                    3. Create a new Bus Station
+                    4. Add a new bus
+                    5. Remove a bus
+                    6. Search for a bus
+                    7. View all buses
+                    8. View buses by route
+                    9. Load buses from text file
+                    10. Replace bus list from text file
+                    0. Main Menu""");
             System.out.print("\nYour choice: ");
             choice = scanner.nextLine();
         }
 
         // Process user choice
         if (choice.equals("1")) {
-            System.out.println("\nBUS STATION INFORMATION: ");
-            System.out.println(busStation.toString());
+            System.out.println("\n"+busStation.toString());
         } else if (choice.equals("2")) {
-            addBusMenu();
+            editBusStationInfoMenu();
         } else if (choice.equals("3")) {
-            removeBusMenu();
+            createNewBusStation();
         }  else if (choice.equals("4")) {
-            searchBusMenu();
+            addBusMenu();
         }  else if (choice.equals("5")) {
+            removeBusMenu();
+        } else if (choice.equals("6")) {
+            searchBusMenu();
+        } else if (choice.equals("7")) {
+            System.out.println();
             busStation.displayAllBuses();
+        } else if (choice.equals("8")) {
+            displayAllBusesByRouteMenu();
+        } else if (choice.equals("9")) {
+            loadBusesFromTextFileMenu();
+        } else if (choice.equals("10")) {
+            replaceBusListFromTextFileMenu();
         }
 
-        // If the user did not choose "0", call the bus station management menu again
-        if (!choice.equals("0")) {
-            busStationManagementMenu();
-        }
+        // Call the bus station management menu again
+        busStationManagementMenu();
     }
 
     public static void busManagementMenu() {
@@ -176,6 +247,14 @@ public class MainApp {
         }
     }
 
+    public static void editBusStationInfoMenu() {
+        System.out.println("editBusStationInfoMenu");
+    }
+
+    public static void createNewBusStation() {
+        System.out.println("createNewBusStation");
+    }
+
     public static void addBusMenu() {
 
         // Display a separator
@@ -211,7 +290,7 @@ public class MainApp {
     }
 
     public static void removeBusMenu() {
-
+        System.out.println("removeBusMenu");
     }
 
     public static void searchBusMenu() {
@@ -236,6 +315,34 @@ public class MainApp {
         } else {
 
         }
+    }
+
+    public static void displayAllBusesByRouteMenu() {
+        // Display a separator
+        System.out.print("\n**************************************************************************\n\n");
+
+        // Prompt user to enter the route name
+        System.out.print("Enter route name: ");
+        String routeName = scanner.nextLine();
+
+        busStation.displayAllBuses(routeName);
+    }
+
+    public static void loadBusesFromTextFileMenu() {
+        System.out.println("loadBusesFromTextFileMenu");
+    }
+
+    public static void replaceBusListFromTextFileMenu() {
+        System.out.println("replaceBusListFromTextFileMenu");
+    }
+
+    private static boolean isValidChoice(String choice, String[] choices) {
+        for (String validChoice : choices) {
+            if (validChoice.equals(choice)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean isValidFormat(String str, int length) {
@@ -331,51 +438,5 @@ public class MainApp {
 
                 """);
         }
-    }
-
-    public static BusStation getDundalkBusStation() {
-        BusStation dundalkBusStation = new BusStation("Dundalk Bus Station", "Dundalk");
-        dundalkBusStation.addBus(getRoute100());
-        dundalkBusStation.addBus(getRoute100X());
-        return dundalkBusStation;
-    }
-
-    public static Bus getRoute100() {
-        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
-                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
-                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)", "Haggardstown (Sextons)",
-                "Greengates Cross (Southbound)", "Castlebellingham (The Village Store)",
-                "Kilsaran (Opp St Olivers Park)", "Kilsaran (Opp St Marys Villas)",
-                "Mullins Cross (Southbound)", "Dunleer (The Dunleer Inn)", "Dunleer (Wogans Hardware)",
-                "Mullary (Southbound)", "Tinure (Southbound)", "Monasterboice (Monasterboice Inn)",
-                "Killeneer (Cockle Rd Cross Sbound)", "Killeneer (Killeneer Cottages)",
-                "Drogheda Hospital (NorthGate East)", "Drogheda (Bus Station)"
-        ));
-        ArrayList<String> times = new ArrayList<>(Arrays.asList(
-                "06:15", "06:17", "06:19", "06:20", "06:23", "06:24", "06:30", "06:31", "06:32", "06:35",
-                "06:39", "06:40", "06:43", "06:45", "06:49", "06:49", "06:50", "06:56", "07:06"
-        ));
-        return new Bus(314682, "100", "Dundalk - Drogheda", "06:15",
-                "07:06", 55, stops, times);
-    }
-
-    public static Bus getRoute100X() {
-        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
-                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
-                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)",
-                "Castlebellingham (The Village Store)", "Dunleer (The Dunleer Inn)",
-                "Drogheda (North Road - Opp Circle K)", "Drogheda (Donore Rd FBD)", "Drogheda (Bus Station)",
-                "Drogheda (Donore Rd The Thatch Pub)", "Dublin Airport (Terminal Two)", "Dublin Airport - Maldron Hotel",
-                "Dublin (East Wall Rd Opp 3Arena)", "Dublin (Opp Convention Centre)",
-                "Custom House Qy (Op Hilton Garden Inn)", "South Townsend St",
-                "Westland Row Church", "Merrion Square West (Jct Clare St)", "Merrion Square South"
-        ));
-
-        ArrayList<String> times = new ArrayList<>(Arrays.asList(
-                "06:30", "06:33", "06:35", "06:37", "", "", "", "07:02", "07:10", "07:14",
-                "07:46", "07:48", "08:02", "08:04", "08:06", "08:09", "08:12", "08:16", "08:20"
-        ));
-        return new Bus(314654, "100X", "Dundalk - Dublin", "06:30",
-                "08:20", 55, stops, times);
     }
 }
