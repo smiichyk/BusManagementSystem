@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MainApp {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final BusStation busStation = getDundalkBusStation();
+    private static BusStation busStation = getDundalkBusStation();
     private static final int busNumberLength = 6;
 
     public static void main(String[] args) {
@@ -13,12 +13,14 @@ public class MainApp {
 
     public static BusStation getDundalkBusStation() {
         BusStation dundalkBusStation = new BusStation("Dundalk Bus Station", "Dundalk");
-        dundalkBusStation.addBus(getRoute100());
-        dundalkBusStation.addBus(getRoute100X());
+        dundalkBusStation.addBus(getRoute100_314645());
+        dundalkBusStation.addBus(getRoute100_314682());
+        dundalkBusStation.addBus(getRoute100_314569());
+        dundalkBusStation.addBus(getRoute100X_314654());
         return dundalkBusStation;
     }
 
-    public static Bus getRoute100() {
+    public static Bus getRoute100_314682() {
         ArrayList<String> stops = new ArrayList<>(Arrays.asList(
                 "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
                 "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)", "Haggardstown (Sextons)",
@@ -37,7 +39,45 @@ public class MainApp {
                 "07:06", 55, stops, times);
     }
 
-    public static Bus getRoute100X() {
+    public static Bus getRoute100_314645() {
+        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
+                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
+                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)", "Haggardstown (Sextons)",
+                "Greengates Cross (Southbound)", "Castlebellingham (The Village Store)",
+                "Kilsaran (Opp St Olivers Park)", "Kilsaran (Opp St Marys Villas)",
+                "Mullins Cross (Southbound)", "Dunleer (The Dunleer Inn)", "Dunleer (Wogans Hardware)",
+                "Mullary (Southbound)", "Tinure (Southbound)", "Monasterboice (Monasterboice Inn)",
+                "Killeneer (Cockle Rd Cross Sbound)", "Killeneer (Killeneer Cottages)",
+                "Drogheda Hospital (NorthGate East)", "Drogheda (Bus Station)"
+        ));
+        ArrayList<String> times = new ArrayList<>(Arrays.asList(
+                "07:15", "07:17", "07:19", "07:20", "07:23", "07:24", "07:30", "07:31", "07:32", "07:35",
+                "07:39", "07:40", "07:43", "07:45", "07:49", "07:49", "07:50", "07:56", "08:06"
+        ));
+        return new Bus(314645, "100", "Dundalk - Drogheda", "07:15",
+                "08:06", 55, stops, times);
+    }
+
+    public static Bus getRoute100_314569() {
+        ArrayList<String> stops = new ArrayList<>(Arrays.asList(
+                "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
+                "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)", "Haggardstown (Sextons)",
+                "Greengates Cross (Southbound)", "Castlebellingham (The Village Store)",
+                "Kilsaran (Opp St Olivers Park)", "Kilsaran (Opp St Marys Villas)",
+                "Mullins Cross (Southbound)", "Dunleer (The Dunleer Inn)", "Dunleer (Wogans Hardware)",
+                "Mullary (Southbound)", "Tinure (Southbound)", "Monasterboice (Monasterboice Inn)",
+                "Killeneer (Cockle Rd Cross Sbound)", "Killeneer (Killeneer Cottages)",
+                "Drogheda Hospital (NorthGate East)", "Drogheda (Bus Station)"
+        ));
+        ArrayList<String> times = new ArrayList<>(Arrays.asList(
+                "08:15", "08:17", "08:19", "08:20", "08:23", "08:24", "08:30", "08:31", "08:32", "08:35",
+                "08:39", "08:40", "08:43", "08:45", "08:49", "08:49", "08:50", "08:56", "09:06"
+        ));
+        return new Bus(314569, "100", "Dundalk - Drogheda", "08:15",
+                "09:06", 48, stops, times);
+    }
+
+    public static Bus getRoute100X_314654() {
         ArrayList<String> stops = new ArrayList<>(Arrays.asList(
                 "Dundalk (Bus Station- Long Walk)", "Dundalk (Dublin Rd McDonalds)",
                 "Dundalk (Opp County Louth Hospital)", "Dundalk I.T (Main Gate)",
@@ -64,10 +104,12 @@ public class MainApp {
         // Loop runs until the user chooses to exit
         while (!exit) {
 
-            // Display the main menu options
+            // Display the menu options
             System.out.println("""
                     
                     **************************************************************************
+                    
+                    MAIN MENU:
                     
                     1. Bus Station Management
                     2. Bus Management
@@ -77,15 +119,15 @@ public class MainApp {
             System.out.print("\nYour choice: ");
             String choice = scanner.nextLine();
 
-            // Validate user input to ensure it is one of the allowed choices (0, 1, or 2)
+            // Validate user input to ensure it is one of the allowed choices
             while (!isValidChoice(choice, choices)) {
                 System.out.println("""
                     
-                    **************************************************************************
-                    
+                    __________________________________________________________________________
+                 
                     Invalid choice. Please enter a number from 0 to 2.
                     
-                    **************************************************************************
+                    __________________________________________________________________________
                     
                     1. Bus Station Management
                     2. Bus Management
@@ -112,49 +154,39 @@ public class MainApp {
 
     public static void busStationManagementMenu() {
 
-        String[] choices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] choices = {"1", "2", "3", "4", "0"};
 
-        // Display the bus station management menu options
+        // Display the menu options
         System.out.println("""
                 
                 **************************************************************************
                 
+                BUS STATION MANAGEMENT MENU:
+                
                 1. View bus station information
-                2. Edit Bus Station Info
-                3. Create a new Bus Station
-                4. Add a new bus
-                5. Remove a bus
-                6. Search for a bus
-                7. View all buses
-                8. View buses by route
-                9. Load buses from text file
-                10. Replace bus list from text file
+                2. Edit bus station information
+                3. Create a new bus station
+                4. Buses Management
                 0. Main Menu""");
 
         // Read user input
         System.out.print("\nYour choice: ");
         String choice = scanner.nextLine();
 
-        // Validate user input to ensure it is one of the allowed choices (1, 2, 3, 4, 5, 6, 7, 8, 9, or 10)
+        // Validate user input to ensure it is one of the allowed choices
         while (!isValidChoice(choice, choices)) {
             System.out.println("""
                                     
-                    **************************************************************************
+                    __________________________________________________________________________
                                     
-                    Invalid choice. Please enter a number from 0 to 5.
+                    Invalid choice. Please enter a number from 0 to 9.
                     
-                    **************************************************************************
+                    __________________________________________________________________________
                                     
                     1. View bus station information
-                    2. Edit Bus Station Info
-                    3. Create a new Bus Station
-                    4. Add a new bus
-                    5. Remove a bus
-                    6. Search for a bus
-                    7. View all buses
-                    8. View buses by route
-                    9. Load buses from text file
-                    10. Replace bus list from text file
+                    2. Edit bus station information
+                    3. Create a new bus station
+                    4. Buses Management
                     0. Main Menu""");
             System.out.print("\nYour choice: ");
             choice = scanner.nextLine();
@@ -166,34 +198,25 @@ public class MainApp {
         } else if (choice.equals("2")) {
             editBusStationInfoMenu();
         } else if (choice.equals("3")) {
-            createNewBusStation();
+            createNewBusStationMenu();
         }  else if (choice.equals("4")) {
-            addBusMenu();
-        }  else if (choice.equals("5")) {
-            removeBusMenu();
-        } else if (choice.equals("6")) {
-            searchBusMenu();
-        } else if (choice.equals("7")) {
-            System.out.println();
-            busStation.displayAllBuses();
-        } else if (choice.equals("8")) {
-            displayAllBusesByRouteMenu();
-        } else if (choice.equals("9")) {
-            loadBusesFromTextFileMenu();
-        } else if (choice.equals("10")) {
-            replaceBusListFromTextFileMenu();
+            busesManagementMenu();
         }
 
-        // Call the bus station management menu again
-        busStationManagementMenu();
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            busStationManagementMenu();
+        }
     }
 
     public static void busManagementMenu() {
 
-        // Display the bus management menu options
+        // Display the menu options
         System.out.println("""
                 
                 **************************************************************************
+                
+                BUS MANAGEMENT MENU:
                 
                 1. View bus route
                 2. Add a stop
@@ -203,27 +226,158 @@ public class MainApp {
                 6. View route duration
                 7. Change bus capacity
                 0. Main Menu""");
+    }
+
+    public static void editBusStationInfoMenu() {
+        String[] choices = {"1", "2", "3", "0"};
+
+        // Display the menu options
+        System.out.println("""
+                                
+                **************************************************************************
+                
+                EDIT BUS STATION INFO MENU:
+                                
+                1. Change station name
+                2. Change location
+                3. Replace bus list from text file
+                0. Return""");
 
         // Read user input
         System.out.print("\nYour choice: ");
         String choice = scanner.nextLine();
 
-        // Validate user input to ensure it is one of the allowed choices (0, 1, 2, 3, 4, 5, 6 or 7)
-        while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4") &&
-                !choice.equals("5") && !choice.equals("6") && !choice.equals("7") && !choice.equals("0")) {
+        // Validate user input to ensure it is one of the allowed choices
+        while (!isValidChoice(choice, choices)) {
             System.out.println("""
+                                    
+                    __________________________________________________________________________
+                                        
+                    Invalid choice. Please enter a number from 0 to 3.
+                        
+                    __________________________________________________________________________
+                                    
+                    1. Change station name
+                    2. Change location
+                    3. Replace bus list from text file
+                    0. Return""");
+            System.out.print("\nYour choice: ");
+            choice = scanner.nextLine();
+        }
+
+        // Process user choice
+        if (choice.equals("1")) {
+            // Prompt user to enter the station name
+            System.out.print("\nEnter station name: ");
+            String stationName = scanner.nextLine();
+            // Change station name
+            busStation.setStationName(stationName);
+        } else if (choice.equals("2")) {
+            // Prompt user to enter the location
+            System.out.print("\nEnter location: ");
+            String location = scanner.nextLine();
+            // Change location
+            busStation.setLocation(location);
+        } else if (choice.equals("3")) {
+            replaceBusListFromTextFileMenu();
+        }
+
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            editBusStationInfoMenu();
+        }
+    }
+
+    public static void createNewBusStationMenu() {
+        String[] choices = {"1", "2", "3", "0"};
+
+        // Display the menu options
+        System.out.println("""
                 
                 **************************************************************************
                 
-                Invalid choice. Please enter a number from 0 to 7.
+                CREATE NEW BUS STATION MENU:
                 
-                1. View bus route
-                2. Add a stop
-                3. Remove a stop
-                4. Update stop information
-                5. Check if a stop is on the route
-                6. View route duration
-                7. Change bus capacity
+                1. Create an empty bus station
+                2. Create a bus station with full details
+                3. Create a bus station with partial information
+                0. Return""");
+
+        // Read user input
+        System.out.print("\nYour choice: ");
+        String choice = scanner.nextLine();
+
+        // Validate user input to ensure it is one of the allowed choices
+        while (!isValidChoice(choice, choices)) {
+            System.out.println("""
+                
+                __________________________________________________________________________
+             
+                Invalid choice. Please enter a number from 0 to 3.
+                
+                __________________________________________________________________________
+                                
+                1. Create an empty bus station
+                2. Create a bus station with full details
+                3. Create a bus station with partial information
+                0. Return""");
+            System.out.print("\nYour choice: ");
+            choice = scanner.nextLine();
+        }
+
+        // Process user choice
+        if (choice.equals("1")) {
+            createBusStationMenuChoiceMenu(1);
+        } else if (choice.equals("2")) {
+            createBusStationMenuChoiceMenu(2);
+        } else if (choice.equals("3")) {
+            createBusStationMenuChoiceMenu(3);
+        }
+
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            createNewBusStationMenu();
+        }
+    }
+
+    public static void busesManagementMenu() {
+        String[] choices = {"1", "2", "3", "4", "5", "6", "0"};
+
+        // Display the menu options
+        System.out.println("""
+                
+                **************************************************************************
+                
+                BUSES MANAGEMENT MENU:
+                
+                1. Add a new bus
+                2. Add buses from text file
+                3. Remove a bus
+                4. Remove all buses
+                5. Search for a bus
+                6. View all buses
+                0. Main Menu""");
+
+        // Read user input
+        System.out.print("\nYour choice: ");
+        String choice = scanner.nextLine();
+
+        // Validate user input to ensure it is one of the allowed choices
+        while (!isValidChoice(choice, choices)) {
+            System.out.println("""
+                                
+                __________________________________________________________________________
+                                
+                Invalid choice. Please enter a number from 0 to 6.
+                
+                __________________________________________________________________________
+                                
+                1. Add a new bus
+                2. Add buses from text file
+                3. Remove a bus
+                4. Remove all buses
+                5. Search for a bus
+                6. View all buses
                 0. Main Menu""");
             System.out.print("\nYour choice: ");
             choice = scanner.nextLine();
@@ -231,34 +385,37 @@ public class MainApp {
 
         // Process user choice
         if (choice.equals("1")) {
-
+            addBusMenu();
         } else if (choice.equals("2")) {
-
+            loadBusesFromTextFileMenu();
         } else if (choice.equals("3")) {
+            // Prompt user to enter the bus number
+            String busNumberString = validateBusNumber();
+            // Prompt the user for the bus number and validate its format
+            int busNumber = Integer.parseInt(busNumberString);
 
-        }  else if (choice.equals("4")) {
-
-        }  else if (choice.equals("5")) {
-
+            if (busStation.isBusInBusesByNumber(busNumber)) {
+                busStation.removeBus(busNumber);
+                System.out.println("\nBus "+busNumber+" removed from the bus list.");
+            } else {
+                System.out.println("\nThere are no buses with the bus number "+busNumber+".");
+            }
+        } else if (choice.equals("4")) {
+            busStation.setBuses(new ArrayList<>());
+        } else if (choice.equals("5")) {
+            searchBusMenu();
         } else if (choice.equals("6")) {
+            busStation.displayAllBuses(busStation.getBuses(), 0, 0, "");
+            System.out.println();
+        }
 
-        } else if (choice.equals("7")) {
-
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            busesManagementMenu();
         }
     }
 
-    public static void editBusStationInfoMenu() {
-        System.out.println("editBusStationInfoMenu");
-    }
-
-    public static void createNewBusStation() {
-        System.out.println("createNewBusStation");
-    }
-
     public static void addBusMenu() {
-
-        // Display a separator
-        System.out.print("\n**************************************************************************\n\n");
 
         // Prompt user to enter the bus number
         String busNumberString = validateBusNumber();
@@ -289,43 +446,71 @@ public class MainApp {
         System.out.println("Bus "+busNumber+" added to the "+busStation.getStationName());
     }
 
-    public static void removeBusMenu() {
-        System.out.println("removeBusMenu");
-    }
-
     public static void searchBusMenu() {
+
+        String[] choices = {"1", "2", "3", "0"};
+
+        // Display menu options
         System.out.println("""
                 
-                1. Search for a bus by number
-                2. Search for a bus by name""");
+                **************************************************************************
+                
+                SEARCH BUS MENU:
+                
+                1. By number
+                2. By name
+                3. By route name
+                0. Return""");
+
+        // Read user input
         System.out.print("\nYour choice: ");
         String choice = scanner.nextLine();
-        while (!choice.equals("1") && !choice.equals("2")) {
+
+        // Validate user input to ensure it is one of the allowed choices
+        while (!isValidChoice(choice, choices)) {
             System.out.println("""
+                                
+                __________________________________________________________________________
+                                
+                Invalid choice. Please enter a number from 0 to 3.
                 
-                Invalid choice. Please enter a number from 0 to 2.
-                
-                1. Search for a bus by number
-                2. Search for a bus by name""");
+                __________________________________________________________________________
+                                
+                1. By number
+                2. By name
+                3. By route name
+                0. Return""");
             System.out.print("\nYour choice: ");
             choice = scanner.nextLine();
         }
+
+        // Process user choice
         if (choice.equals("1")) {
-
-        } else {
-
+            // Prompt user to enter the bus number
+            String busNumberString = validateBusNumber();
+            // Prompt the user for the bus number and validate its format
+            int busNumber = Integer.parseInt(busNumberString);
+            ArrayList<Bus> buses = busStation.busByNumber(busNumber);
+            busStation.displayAllBuses(buses, 1, busNumber, "");
+        } else if (choice.equals("2")) {
+            // Prompt user to enter the bus name
+            System.out.print("\nEnter bus name: ");
+            String busName = scanner.nextLine();
+            ArrayList<Bus> buses = busStation.busesByName(busName);
+            busStation.displayAllBuses(buses, 2, 0, busName);
+        } else if (choice.equals("3")) {
+            // Prompt user to enter the route name
+            System.out.print("\nEnter route name: ");
+            String routeName = scanner.nextLine();
+            ArrayList<Bus> buses = busStation.busesByRoute(routeName);
+            busStation.displayAllBuses(buses, 3, 0, routeName);
         }
-    }
+        System.out.println();
 
-    public static void displayAllBusesByRouteMenu() {
-        // Display a separator
-        System.out.print("\n**************************************************************************\n\n");
-
-        // Prompt user to enter the route name
-        System.out.print("Enter route name: ");
-        String routeName = scanner.nextLine();
-
-        busStation.displayAllBuses(routeName);
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            searchBusMenu();
+        }
     }
 
     public static void loadBusesFromTextFileMenu() {
@@ -334,6 +519,123 @@ public class MainApp {
 
     public static void replaceBusListFromTextFileMenu() {
         System.out.println("replaceBusListFromTextFileMenu");
+    }
+
+    public static void createBusStationMenuChoiceMenu(int choice) {
+
+        System.out.print("""
+
+                A Bus Station already exists. Creating a new one will delete the previous one.
+                
+                """);
+        System.out.print("Are you sure? (yes/no): ");
+        String confirmation = scanner.nextLine().toLowerCase();
+
+        if (confirmation.equals("yes")) {
+            if (choice == 1) {
+                System.out.println("\nNew Empty Bus Station was created.");
+                busStation = new BusStation();
+            } else if (choice == 2) {
+                // Prompt user to enter the station name
+                System.out.print("\nEnter station name: ");
+                String stationName = scanner.nextLine();
+
+                // Prompt user to enter the location
+                System.out.print("Enter location: ");
+                String location = scanner.nextLine();
+
+                // Prompt user to enter the file link to the file with buses
+                System.out.print("Enter the file link to the file containing bus information:");
+                replaceBusListFromTextFileMenu();
+                ArrayList<Bus> buses = new ArrayList<>();
+
+                busStation = new BusStation(stationName, location, buses);
+            } else {
+                createBusStationWithPartialInfo();
+            }
+        }
+    }
+
+    public static void createBusStationWithPartialInfo() {
+        String[] choices = {"1", "2", "3", "4", "0"};
+
+        // Display the menu options
+        System.out.println("""
+                
+                **************************************************************************
+                
+                CREATE BUS STATION WITH PARTIAL INFO MENU:
+                
+                1. Enter only the station name
+                2. Enter the station name and location
+                3. Enter the station name and bus list
+                4. Enter only the bus list
+                0. Return""");
+
+        // Read user input
+        System.out.print("\nYour choice: ");
+        String choice = scanner.nextLine();
+
+        // Validate user input to ensure it is one of the allowed choices
+        while (!isValidChoice(choice, choices)) {
+            System.out.println("""
+                                
+                __________________________________________________________________________
+                                
+                Invalid choice. Please enter a number from 0 to 4.
+                
+                __________________________________________________________________________
+                                    
+                1. Enter only the station name
+                2. Enter the station name and location
+                3. Enter the station name and bus list
+                4. Enter only the bus list
+                0. Return""");
+            System.out.print("\nYour choice: ");
+            choice = scanner.nextLine();
+        }
+
+        // Process user choice
+        if (choice.equals("1")) {
+            // Prompt user to enter the station name
+            System.out.print("\nEnter station name: ");
+            String stationName = scanner.nextLine();
+
+            busStation = new BusStation(stationName);
+        } else if (choice.equals("2")) {
+            // Prompt user to enter the station name
+            System.out.print("\nEnter station name: ");
+            String stationName = scanner.nextLine();
+
+            // Prompt user to enter the location
+            System.out.print("Enter location: ");
+            String location = scanner.nextLine();
+
+            busStation = new BusStation(stationName, location);
+        } else if (choice.equals("3")) {
+            // Prompt user to enter the station name
+            System.out.print("\nEnter station name: ");
+            String stationName = scanner.nextLine();
+
+            // Prompt user to enter the file link to the file with buses
+            System.out.print("Enter the file link to the file containing bus information:");
+            replaceBusListFromTextFileMenu();
+            ArrayList<Bus> buses = new ArrayList<>();
+
+            busStation = new BusStation(stationName, buses);
+        }  else if (choice.equals("4")) {
+            // Prompt user to enter the file link to the file with buses
+            System.out.print("\nEnter the file link to the file containing bus information:");
+            replaceBusListFromTextFileMenu();
+            ArrayList<Bus> buses = new ArrayList<>();
+
+            busStation = new BusStation(buses);
+        }
+
+        // Call the menu again if choice not 0
+        if (!choice.equals("0")) {
+            createBusStationWithPartialInfo();
+        }
     }
 
     private static boolean isValidChoice(String choice, String[] choices) {
@@ -359,7 +661,7 @@ public class MainApp {
 
     public static String validateBusNumber() {
         while (true) {
-            System.out.print("Enter bus number: ");
+            System.out.print("\nEnter bus number: ");
             String busNumberString = scanner.nextLine();
 
             if (isValidFormat(busNumberString, busNumberLength)) {
@@ -422,7 +724,7 @@ public class MainApp {
 
             if (isValidFormat) {
                 // If the user enters an empty value, default seat capacity to 0
-                if (seatCapacityString.equals("")) {
+                if (seatCapacityString.isEmpty()) {
                     seatCapacityString = "0";
                 }
 
