@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bus {
+public class Bus implements Comparable<Bus> {
 
     // Fields
     private int busNumber;
@@ -261,6 +261,15 @@ public class Bus {
         return "Bus: {busNumber: "+this.busNumber+"; busName: "+this.busName+"; routeName: "+this.routeName+
                 "; departureTime: "+this.departureTime+"; arrivalTime: "+this.arrivalTime+
                 "; seatCapacity: "+this.seatCapacity+"; stops: "+this.stops.size()+
-                "; times: "+this.times.size()+ "}";
+                "; times: "+this.times.size()+ "}\n";
+    }
+    public int compareTo(Bus other) {
+        if (this.busNumber > other.busNumber) {
+            return 1;
+        } else if (this.busNumber < other.busNumber) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
