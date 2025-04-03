@@ -232,7 +232,7 @@ public class BusStation {
     public void displayAllBuses(ArrayList<Bus> buses, int type, int searchByInt, String searchByString) {
         this.sortBuses();
         if (type==0) {
-            System.out.println("\nBUSES CURRENTLY IN " + stationName + ": " + buses.size());
+            System.out.println("BUSES CURRENTLY IN " + stationName + ": " + buses.size());
             if (!buses.isEmpty()) {
                 System.out.printf("%n %-15s %-15s %-15s", "Bus Number", "Bus Name", "Departure Time");
                 for (Bus bus : buses) {
@@ -241,7 +241,7 @@ public class BusStation {
             }
         } else if (type == 1) {
             if (isBusInBusesByNumber(searchByInt)) {
-                System.out.println("\nALL BUSES BY BUS NUMBER: ");
+                System.out.println("ALL BUSES BY BUS NUMBER: ");
                 System.out.printf("%n %-15s %-15s %-15s", "Bus Number", "Bus Name", "Departure Time");
                 for (Bus bus : buses) {
                     if (bus.getBusNumber() == searchByInt) {
@@ -249,11 +249,11 @@ public class BusStation {
                     }
                 }
             } else {
-                System.out.print("\nThere are no buses with bus number: "+searchByInt+".");
+                System.out.print("There are no buses with bus number: "+searchByInt+".");
             }
         } else if (type == 2) {
             if (isBusInBusesByName(searchByString)) {
-                System.out.println("\nALL BUSES BY BUS NAME: ");
+                System.out.println("ALL BUSES BY BUS NAME: ");
                 System.out.printf("%n %-15s %-15s %-15s", "Bus Number", "Bus Name", "Departure Time");
                 for (Bus bus : buses) {
                     if (bus.getBusName().equals(searchByString)) {
@@ -261,11 +261,11 @@ public class BusStation {
                     }
                 }
             } else {
-                System.out.print("\nThere are no buses with bus name: "+searchByString+".");
+                System.out.print("There are no buses with bus name: "+searchByString+".");
             }
         } else {
             if (isBusInBusesByRoute(searchByString)) {
-                System.out.println("\nALL BUSES BY ROUTE NAME: ");
+                System.out.println("ALL BUSES BY ROUTE NAME: ");
                 System.out.printf("%n %-15s %-15s %-15s", "Bus Number", "Bus Name", "Departure Time");
                 for (Bus bus : buses) {
                     if (bus.getRouteName().equals(searchByString)) {
@@ -273,7 +273,7 @@ public class BusStation {
                     }
                 }
             } else {
-                System.out.print("\nThere are no buses with route name: "+searchByString+".");
+                System.out.print("There are no buses with route name: "+searchByString+".");
             }
         }
     }
