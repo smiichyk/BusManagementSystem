@@ -1,8 +1,13 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Bus implements Comparable<Bus> {
 
+
     // Fields
+
     private int busNumber;
     private String busName;
     private String routeName;
@@ -12,7 +17,9 @@ public class Bus implements Comparable<Bus> {
     ArrayList<String> stops;
     ArrayList<String> times;
 
+
     // Constructors
+
     public Bus() {
         this.busNumber=0;
         this.busName="";
@@ -134,7 +141,9 @@ public class Bus implements Comparable<Bus> {
         this.times=times;
     }
 
+
     // Getters
+
     public int getBusNumber() {
         return busNumber;
     }
@@ -160,7 +169,9 @@ public class Bus implements Comparable<Bus> {
         return times;
     }
 
+
     // Setters
+
     public void setBusNumber(int busNumber) {
         this.busNumber = busNumber;
     }
@@ -186,89 +197,260 @@ public class Bus implements Comparable<Bus> {
         this.times = times;
     }
 
+
     // Methods
-    public void addStop(String stop_name, String time) {
-        stops.add(stop_name);
-        times.add(time);
-    }
+
+    /**
+     * Adds a stop and its corresponding time at the specified index.
+     *
+     * @param index The index at which the stop and time should be added.
+     * @param stop_name The name of the stop to be added.
+     * @param time The time associated with the stop.
+     */
     public void addStop(int index, String stop_name, String time) {
         stops.add(index, stop_name);
         times.add(index, time);
     }
-    public void addMultipleStops(ArrayList<String> stops, ArrayList<String> times) {
-        this.stops.addAll(stops);
-        this.times.addAll(times);
-    }
-    public void removeStop(String stop_name) {
-        for (String stop : stops) {
-            if (stop.equals(stop_name)) {
-                stops.remove(stop);
-                times.remove(stop);
-            }
-        }
-    }
+
+    /**
+     * Removes the stop and its corresponding time at the specified index.
+     *
+     * @param index The index of the stop and time to remove.
+     */
     public void removeStop(int index) {
         stops.remove(index);
         times.remove(index);
     }
+
+    /**
+     * Reads stop names from a text file. Each line is expected to contain a stop name and time separated by a comma.
+     *
+     * @param fileLink The path to the text file containing stop data.
+     * @return A list of stop names.
+     * @throws FileNotFoundException If the file is not found.
+     */
+    public ArrayList<String> getStopsFromTextFile(String fileLink) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(fileLink));
+        ArrayList<String> stops = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            stops.add(data.substring(0, data.indexOf(",")));
+        }
+
+        return stops;
+    }
+
+    /**
+     * Reads stop times from a text file. Each line is expected to contain a stop name and time separated by a comma.
+     *
+     * @param fileLink The path to the text file containing stop data.
+     * @return A list of stop times.
+     * @throws FileNotFoundException If the file is not found.
+     */
+    public ArrayList<String> getTimesFromTextFile(String fileLink) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(fileLink));
+        ArrayList<String> times = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            times.add(data.substring(data.indexOf(",")+1));
+        }
+
+        return times;
+    }
+
+
+    /**
+     * Populates the internal lists of stops and times from a text file.
+     * Each line in the file should contain a stop and time separated by a comma.
+     *
+     * @param fileLink The path to the text file.
+     * @throws FileNotFoundException If the file is not found.
+     */
+    public void setStopsAndTimesFromTextFile(String fileLink) throws FileNotFoundException {
+        this.stops = getStopsFromTextFile(fileLink);
+        this.times = getTimesFromTextFile(fileLink);
+    }
+
+    /**
+     * Clears all stored stops and their corresponding times.
+     */
     public void clearStops() {
         stops.clear();
         times.clear();
     }
+
+    /**
+     * Returns the number of stops currently stored.
+     *
+     * @return The total number of stops.
+     */
     public int getStopCount() {
         return stops.size();
     }
+
+    /**
+     * Updates the stop and time at the specified index.
+     *
+     * @param index The index of the stop to update.
+     * @param new_stop The new stop name.
+     * @param new_time The new stop time.
+     */
     public void updateStop(int index, String new_stop, String new_time) {
         stops.set(index, new_stop);
         times.set(index, new_time);
     }
+
+    /**
+     * Checks if the route contains a stop with the specified name.
+     *
+     * @param stop_name The name of the stop to search for.
+     * @return true if a matching stop is found; false otherwise.
+     */
     public boolean hasStop(String stop_name) {
+        // Check if the current stop contains the given stop_name (case-insensitive)
         for (String stop : stops) {
-            if (stop.equals(stop_name)) {
+            if (stop.toLowerCase().contains(stop_name.toLowerCase())) {
                 return true;
             }
         }
         return false;
     }
-    public void displayRoute() {
-        for (int i=0; i<stops.size(); i++) {
-            System.out.printf("%-15s  %-15s %n", "Stop", "Time");
-            System.out.printf("%-15s  %-15s %n", stops.get(i), times.get(i));
+
+    /**
+     * Displays information for the stop at the specified index.
+     *
+     * @param index The index of the stop to display.
+     */
+    public void displayStop(int index) {
+        System.out.printf("%-7s %-7s  %s %n", "#", "Time", "Stop");
+        for (int i = 0; i < getStopCount(); i++) {
+            if (i==index) {
+                if (i > 8) {
+                    System.out.printf("%-7d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                } else {
+                    System.out.printf("0%-6d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                }
+            }
         }
     }
+
+    /**
+     * Displays information for all stops that match the given name.
+     *
+     * @param name The name or part of the stop name to search for.
+     */
+    public void displayStop(String name) {
+        System.out.printf("%-7s %-7s  %s %n", "#", "Time", "Stop");
+        for (int i = 0; i < getStopCount(); i++) {
+            if (stops.get(i).toLowerCase().contains(name.toLowerCase())) {
+                if (i > 8) {
+                    System.out.printf("%-7d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                } else {
+                    System.out.printf("0%-6d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays all stops with their corresponding times in a formatted table.
+     * If there are no stops, it prints a message indicating that.
+     */
+    public void displayAllStops() {
+        if (getStopCount()!=0) {
+            // Print the header of the table with column names aligned
+            System.out.printf("%-7s %-7s  %s %n", "#", "Time", "Stop");
+            for (int i = 0; i < getStopCount(); i++) {
+                if (i > 8) {
+                    System.out.printf("%-7d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                } else {
+                    System.out.printf("0%-6d %-7s  %s %n", (i + 1), times.get(i), stops.get(i));
+                }
+            }
+        } else {
+            System.out.println("There are no stops!");
+        }
+    }
+
+    /**
+     * Calculates and returns the duration of the route in hours and minutes,
+     * based on the departure and arrival times in "HH:mm" format.
+     *
+     * @return A string representing the route duration, e.g., "1 hour(s) and 30 minute(s)".
+     */
     public String getRouteDuration() {
+        // Convert departure time from "HH:mm" format to total minutes since midnight
         int departureTimeInMinutes = (Integer.parseInt(departureTime.split(":")[0])*60)
                 + Integer.parseInt(departureTime.split(":")[1]);
+
+        // Convert arrival time from "HH:mm" format to total minutes since midnight
         int arrivalTimeInMinutes = (Integer.parseInt(arrivalTime.split(":")[0])*60)
                 + Integer.parseInt(arrivalTime.split(":")[1]);
-        int differenceInMinutes = arrivalTimeInMinutes - departureTimeInMinutes;
-        int difference = 0;
-        while (differenceInMinutes>=60) {
-            differenceInMinutes -=60;
-            difference++;
+
+        // Calculate the difference in minutes between arrival and departure times
+        int minutes = arrivalTimeInMinutes - departureTimeInMinutes;
+
+        // Initialize hours variable (this will store the hours of the time difference)
+        int hours = 0;
+
+        // Loop to convert minutes to hours and remaining minutes
+        while (minutes>=60) {
+            minutes -=60;
+            hours++;
         }
-        return difference+" hour(s) and "+differenceInMinutes+" minute(s)";
+
+        // Return the result in the format "X hour(s) and Y minute(s)"
+        return hours+" hour(s) and "+minutes+" minute(s)";
     }
-    public void increaseCapacity(int seats) {
+
+
+    /**
+     * Increases the bus's seat capacity by one.
+     */
+    public void increaseCapacity() {
         seatCapacity++;
     }
-    public void decreaseCapacity(int seats) {
+
+    /**
+     * Decreases the bus's seat capacity by one, ensuring it does not go below zero.
+     */
+    public void decreaseCapacity() {
         if (seatCapacity>0) {
             seatCapacity--;
         }
     }
+
+    /**
+     * Returns a string representation of the bus object, including its number,
+     * name, route name, departure and arrival times, seat capacity, and stop count.
+     *
+     * @return A formatted string with the bus information.
+     */
+    @Override
     public String toString() {
-        return "Bus: {busNumber: "+this.busNumber+"; busName: "+this.busName+"; routeName: "+this.routeName+
-                "; departureTime: "+this.departureTime+"; arrivalTime: "+this.arrivalTime+
-                "; seatCapacity: "+this.seatCapacity+"; stops: "+this.stops.size()+
-                "; times: "+this.times.size()+ "}\n";
+        return "BUS INFORMATION:\n" +
+                "\nBus number: "+this.busNumber+"\nBus name: "+this.busName+"\nRoute name: "+this.routeName+
+                "\nDeparture time: "+this.departureTime+"\nArrival time: "+this.arrivalTime+
+                "\nSeat capacity: "+this.seatCapacity+"\nStops: "+getStopCount();
     }
+
+
+    /**
+     * Compares this bus with another based on their bus numbers.
+     *
+     * @param other The other Bus object to compare against.
+     * @return 1 if this bus number is greater, -1 if less, 0 if equal.
+     */
     public int compareTo(Bus other) {
         if (this.busNumber > other.busNumber) {
             return 1;
-        } else if (this.busNumber < other.busNumber) {
+        }
+        else if (this.busNumber < other.busNumber) {
             return -1;
-        } else {
+        }
+        else {
             return 0;
         }
     }
